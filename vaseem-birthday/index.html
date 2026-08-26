@@ -45,19 +45,24 @@
       pointer-events: none;
     }
     .lock-icon {
-      font-size: 5rem;
-      margin-bottom: 1.5rem;
-      filter: drop-shadow(0 0 25px rgba(255, 77, 122, 0.6));
-      animation: pulseLock 2s infinite alternate ease-in-out;
-      cursor: pointer;
+      width: 6rem;
+      height: 6rem;
+      color: #ff3b7f;
+      margin-bottom: 2rem;
+      filter: drop-shadow(0 0 20px rgba(255, 59, 127, 0.6));
+      animation: floatLock 3s ease-in-out infinite;
       user-select: none;
     }
     .lock-icon.unlock-anim {
       animation: unlockShake 0.8s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
     }
-    @keyframes pulseLock {
-      0% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(255, 77, 122, 0.4)); }
-      100% { transform: scale(1.05); filter: drop-shadow(0 0 35px rgba(255, 77, 122, 0.8)); }
+    .lock-icon.unlock-anim .cyber-lock path {
+      transform: translateY(-4px);
+      transition: 0.5s;
+    }
+    @keyframes floatLock {
+      0%, 100% { transform: translateY(0); filter: drop-shadow(0 0 15px rgba(255, 59, 127, 0.4)); }
+      50% { transform: translateY(-10px); filter: drop-shadow(0 0 35px rgba(255, 59, 127, 0.9)); }
     }
     @keyframes unlockShake {
       10%, 90% { transform: translate3d(-2px, 0, 0) scale(1.1); }
@@ -81,18 +86,37 @@
       transition: 0.5s;
     }
     .timer-box {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 180, 220, 0.2);
-      border-radius: 1rem;
+      background: rgba(20, 15, 30, 0.6);
+      border: 1px solid rgba(255, 77, 122, 0.3);
+      border-radius: 0.5rem;
       padding: 1.2rem 0.8rem;
       min-width: 85px;
       text-align: center;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+      box-shadow: 0 0 20px rgba(0,0,0,0.6), inset 0 0 15px rgba(255, 77, 122, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    .timer-box::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(transparent, rgba(255, 77, 122, 0.1), transparent);
+      transform: rotate(45deg);
+      animation: scan 4s linear infinite;
+    }
+    @keyframes scan {
+      0% { transform: rotate(45deg) translateY(-100%); }
+      100% { transform: rotate(45deg) translateY(100%); }
     }
     .time-val {
       display: block;
       font-size: 2.2rem;
       font-weight: 700;
+      font-family: 'Courier New', Courier, monospace;
+      letter-spacing: 2px;
       background: linear-gradient(135deg, #ffb3d9, #ff4d7a);
       -webkit-background-clip: text;
       background-clip: text;
@@ -485,7 +509,12 @@
 
   <!-- Lock Screen Overlay -->
   <div id="lock-screen">
-    <div class="lock-icon" id="lock-icon">🔒</div>
+    <div class="lock-icon" id="lock-icon">
+      <svg class="cyber-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+      </svg>
+    </div>
     <div class="lock-message" id="lock-msg">ENCRYPTED DATA PACKAGE // DECRYPTION IN PROGRESS...</div>
     <div class="timer-container" id="timer-container">
       <div class="timer-box">
@@ -968,7 +997,6 @@
     const targetDate = new Date('2026-09-10T00:00:00').getTime();
 
     function unlockSite() {
-      lockIcon.textContent = '🔓';
       lockIcon.classList.add('unlock-anim');
       document.getElementById('lock-msg').textContent = 'HAPPY BIRTHDAY VASEEM! 🎉';
       document.getElementById('lock-msg').style.color = '#fff';
