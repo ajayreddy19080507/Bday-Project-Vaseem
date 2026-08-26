@@ -57,6 +57,29 @@
       filter: drop-shadow(0 0 20px rgba(255, 59, 127, 0.6));
       animation: floatLock 3s ease-in-out infinite;
       user-select: none;
+      position: relative;
+      z-index: 10;
+    }
+    .lock-icon::before, .lock-icon::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 59, 127, 0.8);
+      transform: translate(-50%, -50%) scale(0.8);
+      animation: sonarPulse 4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+      z-index: -1;
+      pointer-events: none;
+    }
+    .lock-icon::after {
+      animation-delay: 2s;
+    }
+    @keyframes sonarPulse {
+      0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; border-width: 2px; }
+      100% { transform: translate(-50%, -50%) scale(4); opacity: 0; border-width: 1px; }
     }
     .lock-icon.unlock-anim {
       animation: unlockShake 0.8s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
