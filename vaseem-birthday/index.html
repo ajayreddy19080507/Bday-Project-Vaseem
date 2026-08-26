@@ -52,7 +52,7 @@
       position: absolute;
       font-size: 2rem;
       color: rgba(255, 120, 180, 0.4);
-      animation: floatHeart 12s infinite ease-in-out;
+      animation: floatHeart 12s infinite cubic-bezier(0.4, 0, 0.2, 1);
       display: inline-block;
     }
     .floating-hearts span:nth-child(1) { left: 5%; animation-delay: 0s; font-size: 2.4rem; }
@@ -65,22 +65,38 @@
     .floating-hearts span:nth-child(8) { left: 92%; animation-delay: 4.5s; font-size: 2.8rem; }
 
     @keyframes floatHeart {
-      0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0.2; }
-      20% { opacity: 0.7; }
-      80% { opacity: 0.7; }
+      0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0; }
+      15% { opacity: 0.6; }
+      85% { opacity: 0.6; }
       100% { transform: translateY(-20vh) rotate(720deg) scale(1.2); opacity: 0; }
+    }
+
+    /* Scroll Reveal Classes */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px) scale(0.98);
+      transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
     }
 
     /* typography & cards */
     .hero, .section, .ending {
-      background: rgba(10, 8, 25, 0.55);
-      backdrop-filter: blur(6px);
-      border-radius: 3rem 2rem;
-      padding: 2.5rem 2rem;
-      margin-bottom: 3rem;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(255, 180, 220, 0.15);
-      border: 1px solid rgba(255, 100, 150, 0.2);
-      transition: 0.3s;
+      background: rgba(18, 14, 34, 0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 2.5rem;
+      padding: 3rem 2rem;
+      margin-bottom: 3.5rem;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 180, 220, 0.15);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .hero:hover, .section:hover, .ending:hover {
+      box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255, 255, 255, 0.15);
+      transform: translateY(-4px);
     }
     .section-title {
       text-align: center;
@@ -133,34 +149,43 @@
     .balloon {
       font-size: 4rem;
       display: inline-block;
-      animation: bob 3s infinite alternate ease-in-out;
+      animation: bob 4s infinite alternate cubic-bezier(0.45, 0, 0.55, 1);
     }
     .balloon-left { float: left; margin-right: 20px; }
     .balloon-right { float: right; margin-left: 20px; }
     @keyframes bob {
-      0% { transform: translateY(0px) rotate(-5deg); }
-      100% { transform: translateY(-18px) rotate(5deg); }
+      0% { transform: translateY(0px) rotate(-3deg); }
+      100% { transform: translateY(-15px) rotate(3deg); }
     }
     .down-arrow {
       display: inline-block;
       font-size: 2.8rem;
       color: #ff8ab0;
-      animation: bounce 1.8s infinite;
+      animation: bounce 2s infinite cubic-bezier(0.28, 0.84, 0.42, 1);
       margin-top: 0.8rem;
       text-decoration: none;
+      transition: color 0.3s ease;
     }
+    .down-arrow:hover { color: #ff3b7f; }
     @keyframes bounce {
-      0%,100%{ transform: translateY(0); }
-      50%{ transform: translateY(15px); }
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(12px); }
     }
     .message-box {
-      background: rgba(25, 15, 40, 0.5);
-      border-radius: 2rem;
-      padding: 2rem 2rem;
-      border-left: 6px solid #ff4d7a;
-      box-shadow: inset 0 0 30px rgba(255, 50, 100, 0.1);
+      background: rgba(30, 20, 50, 0.4);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 1.5rem;
+      padding: 2rem 2.5rem;
+      border-left: 4px solid #ff4d7a;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05), 0 10px 30px rgba(0,0,0,0.2);
       font-size: 1.1rem;
       line-height: 1.8;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .message-box:hover {
+      transform: translateY(-2px);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08), 0 15px 35px rgba(0,0,0,0.3);
     }
     .message-box p {
       margin-bottom: 0.8rem;
@@ -190,29 +215,31 @@
       backdrop-filter: none;
       border-radius: 0;
       overflow: hidden;
-      transition: transform 0.3s ease;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
       line-height: 0;
     }
     .photo-card:hover {
-      transform: scale(1.04);
+      transform: scale(1.05);
       z-index: 10;
     }
     .photo-card img {
       width: 100%;
       height: auto;
       display: block;
-      border-radius: 0.3rem;
+      border-radius: 0.4rem;
       aspect-ratio: 1/1;
       object-fit: cover;
       background: transparent;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-      transition: box-shadow 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s cubic-bezier(0.16, 1, 0.3, 1);
       border: none;
       margin: 0;
       padding: 0;
+      filter: saturate(0.9);
     }
     .photo-card img:hover {
-      box-shadow: 0 4px 25px rgba(255, 50, 100, 0.3);
+      box-shadow: 0 12px 30px rgba(255, 50, 100, 0.4);
+      filter: saturate(1.1);
     }
     .photo-card p {
       display: none !important;
@@ -260,8 +287,8 @@
       padding: 1rem 3rem;
       border-radius: 60px;
       cursor: pointer;
-      box-shadow: 0 0 30px rgba(255, 50, 100, 0.6);
-      transition: 0.3s;
+      box-shadow: 0 8px 25px rgba(255, 50, 100, 0.4);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       margin: 1.2rem 0 0.5rem;
       
       letter-spacing: 2px;
@@ -270,8 +297,8 @@
       z-index: 10;
     }
     #celebrateButton:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 50px #ff3b7f;
+      transform: scale(1.04) translateY(-2px);
+      box-shadow: 0 15px 35px rgba(255, 50, 100, 0.6);
       background: linear-gradient(135deg, #ff6a9e, #e63b6b);
     }
     footer {
@@ -314,10 +341,15 @@
       border-radius: 4px;
       animation: confettiFall linear forwards;
       opacity: 0.95;
+      will-change: transform, opacity;
     }
     @keyframes confettiFall {
       0% {
-        transform: translateY(-20px) rotate(0deg) scale(1);
+        transform: translateY(-20px) rotate(0deg) scale(0);
+        opacity: 0;
+      }
+      10% {
+        transform: translateY(0px) rotate(30deg) scale(1);
         opacity: 1;
       }
       100% {
@@ -330,11 +362,16 @@
       font-size: 2.8rem;
       animation: emojiBurst 2s ease-out forwards;
       pointer-events: none;
+      will-change: transform, opacity;
     }
     @keyframes emojiBurst {
       0% {
-        transform: translate(0, 0) scale(0.2) rotate(0deg);
+        transform: translate(0, 0) scale(0) rotate(0deg);
+        opacity: 0;
+      }
+      15% {
         opacity: 1;
+        transform: translate(calc(var(--tx) * 0.1), calc(var(--ty) * 0.1)) scale(0.8) rotate(30deg);
       }
       100% {
         transform: translate(var(--tx), var(--ty)) scale(1.6) rotate(360deg);
@@ -347,11 +384,12 @@
       height: 6px;
       border-radius: 50%;
       background: #fff;
-      box-shadow: 0 0 12px #ffb0d0;
       animation: sparkleFade 1.2s ease-out forwards;
+      will-change: transform, opacity;
     }
     @keyframes sparkleFade {
-      0% { transform: scale(0); opacity: 1; }
+      0% { transform: scale(0); opacity: 0; }
+      20% { opacity: 1; }
       100% { transform: scale(2); opacity: 0; }
     }
   </style>
@@ -370,7 +408,7 @@
   <!-- MAIN CONTENT -->
   <div class="content">
     <!-- HERO -->
-    <section class="hero">
+    <section class="hero reveal">
       <div class="balloon balloon-left">🎈</div>
       <div class="balloon balloon-right">🎈</div>
       <p class="small-title">A LITTLE BIRTHDAY SURPRISE</p>
@@ -381,13 +419,13 @@
     </section>
 
     <!-- WISH -->
-    <section class="section" id="wish">
-      <div class="section-title">
+    <section class="section reveal" id="wish">
+      <div class="section-title reveal">
         <div class="emoji">💖</div>
         <p>A SWEET WISH</p>
         <h2>For my favourite person</h2>
       </div>
-      <div class="message-box">
+      <div class="message-box reveal">
         <p><strong>To my favourite person..💕</strong></p>
         <p>No matter how much time passes or how life changes, you will always be a special one in my life. 😘</p>
         <p>You're my soulmate 🤌🏻🩷♾️<br><strong>To my dearest one ❣️</strong></p>
@@ -400,25 +438,25 @@
     </section>
 
     <!-- ================= MEMORIES - 9 IMAGES ================= -->
-    <section class="section memories">
+    <section class="section memories reveal">
       <div class="photos">
         <!-- PHOTO 1 -->
-        <div class="photo-card">
+        <div class="photo-card reveal">
           <img src="images/photo1.jpeg" alt="">
         </div>
 
         <!-- PHOTO 2 -->
-        <div class="photo-card">
+        <div class="photo-card reveal">
           <img src="images/photo2.jpeg" alt="">
         </div>
 
         <!-- PHOTO 3 -->
-        <div class="photo-card">
+        <div class="photo-card reveal">
           <img src="images/photo3.jpeg" alt="">
         </div>
 
         <!-- PHOTO 4 -->
-        <div class="photo-card">
+        <div class="photo-card reveal">
           <img src="images/photo4.jpeg" alt="">
         </div>
 
@@ -450,13 +488,13 @@
     </section>
 
     <!-- SPECIAL MESSAGE -->
-    <section class="section">
-      <div class="section-title">
+    <section class="section reveal">
+      <div class="section-title reveal">
         <div class="emoji">🌸</div>
         <p>SPECIAL MESSAGE</p>
         <h2>A few words from the heart</h2>
       </div>
-      <div class="message-box special">
+      <div class="message-box special reveal">
         <p><strong>Wish you a very Happy Birthday Vaseem.... 🫂🥰</strong></p>
         <p>I am very lucky....to have u man ❤️‍🩹</p>
         <p>No matter it is.....U will be a special person within my special person's....🐖</p>
@@ -472,7 +510,7 @@
     </section>
 
     <!-- FINAL -->
-    <section class="ending">
+    <section class="ending reveal">
       <div class="cake">🎂</div>
       <p class="end-title">THE END</p>
       <h2>HAPPY BIRTHDAY<br><span>VASEEM ❤️</span></h2>
@@ -709,8 +747,9 @@
         item.mesh.rotation.y += item.rotSpeed * 0.7;
       });
 
-      camera.position.x += (mouseX * 0.5 - camera.position.x) * 0.005;
-      camera.position.y += (mouseY * 0.3 + 1.5 - camera.position.y) * 0.005;
+      // Smooth Apple-like camera movement using Lerp
+      camera.position.x += (mouseX * 0.5 - camera.position.x) * 0.02;
+      camera.position.y += (mouseY * 0.3 + 1.5 - camera.position.y) * 0.02;
       camera.lookAt(0, 0.3, 0);
 
       renderer.render(scene, camera);
@@ -726,7 +765,7 @@
       const confettiColors = ['#ff4d7a', '#ff9bc0', '#ffb0d0', '#ff6a9e', '#ff2d6a', '#ffaa88', '#ffd0d0', '#ff80b0', '#ff5e8a', '#ff3b7f'];
       const emojis = ['🎉', '✨', '❤️', '💖', '🎊', '🥳', '🎂', '💕', '🌸', '🎈', '🌟', '💗', '💝', '🌺', '🎁'];
 
-      for (let i = 0; i < 180; i++) {
+      for (let i = 0; i < 80; i++) {
         const piece = document.createElement('div');
         piece.className = 'confetti-piece';
         const size = 6 + Math.random() * 16;
@@ -739,11 +778,10 @@
         piece.style.transform = `rotate(${Math.random() * 360}deg)`;
         piece.style.animationDuration = (1.8 + Math.random() * 2.8) + 's';
         piece.style.animationDelay = (Math.random() * 1.5) + 's';
-        piece.style.boxShadow = `0 0 6px ${confettiColors[Math.floor(Math.random() * confettiColors.length)]}`;
         burstContainer.appendChild(piece);
       }
 
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < 20; i++) {
         const emoji = document.createElement('div');
         emoji.className = 'burst-emoji';
         emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
@@ -761,7 +799,7 @@
         burstContainer.appendChild(emoji);
       }
 
-      for (let i = 0; i < 60; i++) {
+      for (let i = 0; i < 25; i++) {
         const spark = document.createElement('div');
         spark.className = 'sparkle';
         spark.style.left = Math.random() * 100 + '%';
@@ -769,7 +807,6 @@
         spark.style.width = (3 + Math.random() * 8) + 'px';
         spark.style.height = spark.style.width;
         spark.style.background = `hsl(${320 + Math.random() * 40}, 100%, 70%)`;
-        spark.style.boxShadow = `0 0 20px ${['#ff4d7a','#ff9bc0','#ffb0d0','#ff6a9e'][Math.floor(Math.random()*4)]}`;
         spark.style.animationDuration = (0.8 + Math.random() * 1.2) + 's';
         spark.style.animationDelay = (Math.random() * 1.5) + 's';
         burstContainer.appendChild(spark);
@@ -790,6 +827,28 @@
         item.mesh.material.color.setHex(0xffaa88);
         setTimeout(() => { item.mesh.material.color.setHex(0xff3b7f); }, 500);
       });
+    });
+
+    // --- Intersection Observer for Scroll Reveals ---
+    const revealOptions = {
+      root: null,
+      rootMargin: '0px 0px -15% 0px',
+      threshold: 0.1
+    };
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          // observer.unobserve(entry.target); // keep it dynamic by not unobserving
+        } else {
+          // Optional: remove 'active' to reveal again when scrolling back up
+          // entry.target.classList.remove('active');
+        }
+      });
+    }, revealOptions);
+
+    document.querySelectorAll('.reveal').forEach(el => {
+      revealObserver.observe(el);
     });
 
     console.log('💖 3D Love background active - Full burst on Celebrate!');
