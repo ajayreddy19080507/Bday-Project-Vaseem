@@ -18,6 +18,93 @@
       overflow-x: hidden;
       scroll-behavior: smooth;
     }
+
+    /* Lock Screen */
+    body.locked {
+      overflow: hidden;
+    }
+    #lock-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(10, 8, 25, 0.7);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #lock-screen.unlocked {
+      opacity: 0;
+      transform: scale(1.1);
+      pointer-events: none;
+    }
+    .lock-icon {
+      font-size: 5rem;
+      margin-bottom: 1.5rem;
+      filter: drop-shadow(0 0 25px rgba(255, 77, 122, 0.6));
+      animation: pulseLock 2s infinite alternate ease-in-out;
+      cursor: pointer;
+      user-select: none;
+    }
+    .lock-icon.unlock-anim {
+      animation: unlockShake 0.8s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+    @keyframes pulseLock {
+      0% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(255, 77, 122, 0.4)); }
+      100% { transform: scale(1.05); filter: drop-shadow(0 0 35px rgba(255, 77, 122, 0.8)); }
+    }
+    @keyframes unlockShake {
+      10%, 90% { transform: translate3d(-2px, 0, 0) scale(1.1); }
+      20%, 80% { transform: translate3d(4px, 0, 0) scale(1.1); }
+      30%, 50%, 70% { transform: translate3d(-8px, 0, 0) scale(1.1); }
+      40%, 60% { transform: translate3d(8px, 0, 0) scale(1.1); }
+      100% { transform: translate3d(0, 0, 0) scale(1.2); filter: brightness(1.5) drop-shadow(0 0 50px #ff3b7f); }
+    }
+    .lock-message {
+      font-size: 1.2rem;
+      letter-spacing: 3px;
+      color: #ffb0d0;
+      margin-bottom: 2.5rem;
+      text-align: center;
+      font-weight: 300;
+      transition: 0.5s;
+    }
+    .timer-container {
+      display: flex;
+      gap: 1.2rem;
+      transition: 0.5s;
+    }
+    .timer-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 180, 220, 0.2);
+      border-radius: 1rem;
+      padding: 1.2rem 0.8rem;
+      min-width: 85px;
+      text-align: center;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    }
+    .time-val {
+      display: block;
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffb3d9, #ff4d7a);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .time-label {
+      display: block;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      color: #cfa0c0;
+      margin-top: 0.5rem;
+    }
     /* 3D canvas background - fixed */
     #three-canvas {
       position: fixed;
@@ -394,7 +481,31 @@
     }
   </style>
 </head>
-<body>
+<body class="locked">
+
+  <!-- Lock Screen Overlay -->
+  <div id="lock-screen">
+    <div class="lock-icon" id="lock-icon">🔒</div>
+    <div class="lock-message" id="lock-msg">VASEEM'S BIRTHDAY SURPRISE UNLOCKS IN</div>
+    <div class="timer-container" id="timer-container">
+      <div class="timer-box">
+        <span class="time-val" id="t-days">00</span>
+        <span class="time-label">DAYS</span>
+      </div>
+      <div class="timer-box">
+        <span class="time-val" id="t-hours">00</span>
+        <span class="time-label">HOURS</span>
+      </div>
+      <div class="timer-box">
+        <span class="time-val" id="t-mins">00</span>
+        <span class="time-label">MINUTES</span>
+      </div>
+      <div class="timer-box">
+        <span class="time-val" id="t-secs">00</span>
+        <span class="time-label">SECONDS</span>
+      </div>
+    </div>
+  </div>
 
   <!-- 3D Canvas background -->
   <div id="three-canvas"></div>
@@ -849,6 +960,61 @@
 
     document.querySelectorAll('.reveal').forEach(el => {
       revealObserver.observe(el);
+    });
+
+    // --- COUNTDOWN LOCK SCREEN ---
+    const lockScreen = document.getElementById('lock-screen');
+    const lockIcon = document.getElementById('lock-icon');
+    const targetDate = new Date('2026-09-10T00:00:00').getTime();
+
+    function unlockSite() {
+      lockIcon.textContent = '🔓';
+      lockIcon.classList.add('unlock-anim');
+      document.getElementById('lock-msg').textContent = 'HAPPY BIRTHDAY VASEEM! 🎉';
+      document.getElementById('lock-msg').style.color = '#fff';
+      document.getElementById('timer-container').style.opacity = '0';
+      document.getElementById('timer-container').style.transform = 'scale(0.8)';
+      document.getElementById('timer-container').style.pointerEvents = 'none';
+      
+      setTimeout(() => {
+        lockScreen.classList.add('unlocked');
+        document.body.classList.remove('locked');
+      }, 1500);
+    }
+
+    const timerInterval = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance <= 0) {
+        clearInterval(timerInterval);
+        document.getElementById('t-days').textContent = "00";
+        document.getElementById('t-hours').textContent = "00";
+        document.getElementById('t-mins').textContent = "00";
+        document.getElementById('t-secs').textContent = "00";
+        if (!lockScreen.classList.contains('unlocked')) unlockSite();
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById('t-days').textContent = days < 10 ? "0" + days : days;
+      document.getElementById('t-hours').textContent = hours < 10 ? "0" + hours : hours;
+      document.getElementById('t-mins').textContent = minutes < 10 ? "0" + minutes : minutes;
+      document.getElementById('t-secs').textContent = seconds < 10 ? "0" + seconds : seconds;
+    }, 1000);
+
+    // Secret bypass for testing
+    let clickCount = 0;
+    lockIcon.addEventListener('click', () => {
+      clickCount++;
+      if (clickCount >= 2) {
+        clearInterval(timerInterval);
+        unlockSite();
+      }
     });
 
     console.log('💖 3D Love background active - Full burst on Celebrate!');
