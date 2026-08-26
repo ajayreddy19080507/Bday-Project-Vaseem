@@ -486,7 +486,7 @@
   <!-- Lock Screen Overlay -->
   <div id="lock-screen">
     <div class="lock-icon" id="lock-icon">🔒</div>
-    <div class="lock-message" id="lock-msg">VASEEM'S BIRTHDAY SURPRISE UNLOCKS IN</div>
+    <div class="lock-message" id="lock-msg">ENCRYPTED DATA PACKAGE // DECRYPTION IN PROGRESS...</div>
     <div class="timer-container" id="timer-container">
       <div class="timer-box">
         <span class="time-val" id="t-days">00</span>
@@ -1006,16 +1006,6 @@
       document.getElementById('t-mins').textContent = minutes < 10 ? "0" + minutes : minutes;
       document.getElementById('t-secs').textContent = seconds < 10 ? "0" + seconds : seconds;
     }, 1000);
-
-    // Secret bypass for testing
-    let clickCount = 0;
-    lockIcon.addEventListener('click', () => {
-      clickCount++;
-      if (clickCount >= 2) {
-        clearInterval(timerInterval);
-        unlockSite();
-      }
-    });
 
     console.log('💖 3D Love background active - Full burst on Celebrate!');
   </script>
