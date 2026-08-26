@@ -1,0 +1,677 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "DM Sans", sans-serif;
+
+    color: #402733;
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(255, 184, 211, 0.35),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 90% 30%,
+            rgba(255, 224, 166, 0.35),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            180deg,
+            #fff8fb,
+            #fff1f6,
+            #fffaf7
+        );
+
+    overflow-x: hidden;
+}
+
+
+/* ================= HERO ================= */
+
+.hero {
+    min-height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    position: relative;
+
+    padding: 30px;
+}
+
+
+.small-title {
+    color: #b73568;
+
+    font-size: 12px;
+
+    letter-spacing: 4px;
+
+    font-weight: 600;
+}
+
+
+.hero h1 {
+    font-family: "Playfair Display", serif;
+
+    font-size: clamp(
+        55px,
+        10vw,
+        110px
+    );
+
+    line-height: .9;
+
+    margin-top: 20px;
+
+    color: #3f2230;
+}
+
+
+.hero h2 {
+    font-family: "Playfair Display", serif;
+
+    color: #e85d8f;
+
+    font-size: clamp(
+        35px,
+        6vw,
+        65px
+    );
+
+    margin-top: 20px;
+}
+
+
+.hero-text {
+    margin-top: 15px;
+
+    color: #866a76;
+
+    font-size: 16px;
+}
+
+
+.down-arrow {
+    margin-top: 45px;
+
+    width: 50px;
+
+    height: 50px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-decoration: none;
+
+    color: #b73568;
+
+    font-size: 25px;
+
+    box-shadow:
+        0 10px 30px
+        rgba(
+            135,
+            55,
+            88,
+            .15
+        );
+
+    animation: bounce 2s infinite;
+}
+
+
+/* ================= BALLOONS ================= */
+
+.balloon {
+    position: absolute;
+
+    font-size: 45px;
+
+    animation: floating 4s ease-in-out infinite;
+}
+
+
+.balloon-left {
+    left: 8%;
+
+    top: 25%;
+}
+
+
+.balloon-right {
+    right: 8%;
+
+    top: 35%;
+
+    animation-delay: 1s;
+}
+
+
+/* ================= SECTION ================= */
+
+.section {
+    width: 90%;
+
+    max-width: 950px;
+
+    margin: auto;
+
+    padding: 100px 0;
+}
+
+
+.section-title {
+    text-align: center;
+
+    margin-bottom: 40px;
+}
+
+
+.section-title .emoji {
+    font-size: 35px;
+
+    margin-bottom: 10px;
+}
+
+
+.section-title p {
+    color: #b73568;
+
+    font-size: 12px;
+
+    letter-spacing: 4px;
+
+    font-weight: 600;
+}
+
+
+.section-title h2 {
+    font-family: "Playfair Display", serif;
+
+    font-size: 38px;
+
+    margin-top: 10px;
+
+    color: #402733;
+}
+
+
+/* ================= MESSAGE ================= */
+
+.message-box {
+    max-width: 780px;
+
+    margin: auto;
+
+    padding: 45px;
+
+    border-radius: 28px;
+
+    background: rgba(
+        255,
+        255,
+        255,
+        .82
+    );
+
+    border: 1px solid
+        rgba(
+            232,
+            93,
+            143,
+            .15
+        );
+
+    box-shadow:
+        0 20px 60px
+        rgba(
+            135,
+            55,
+            88,
+            .12
+        );
+
+    line-height: 1.9;
+
+    font-size: 16px;
+
+    backdrop-filter: blur(10px);
+}
+
+
+.message-box p {
+    margin-bottom: 18px;
+}
+
+
+.message-box p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ================= PHOTOS ================= */
+
+.photos {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 30px;
+}
+
+
+.photo-card {
+    background: white;
+
+    padding: 12px;
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 20px 50px
+        rgba(
+            135,
+            55,
+            88,
+            .15
+        );
+
+    transition: .4s;
+}
+
+
+.photo-card:hover {
+    transform:
+        translateY(-10px)
+        rotate(.5deg);
+}
+
+
+.photo-card img {
+    width: 100%;
+
+    height: 520px;
+
+    object-fit: cover;
+
+    border-radius: 18px;
+
+    display: block;
+}
+
+
+.photo-card p {
+    text-align: center;
+
+    padding: 15px 5px 8px;
+
+    color: #866a76;
+}
+
+
+/* ================= END ================= */
+
+.ending {
+    text-align: center;
+
+    padding:
+        110px 20px
+        100px;
+}
+
+
+.cake {
+    font-size: 65px;
+
+    animation:
+        pulse 2s infinite;
+}
+
+
+.end-title {
+    color: #b73568;
+
+    letter-spacing: 5px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    margin-top: 15px;
+}
+
+
+.ending h2 {
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: clamp(
+        40px,
+        7vw,
+        75px
+    );
+
+    line-height: 1.1;
+
+    margin-top: 15px;
+}
+
+
+.ending h2 span {
+    color: #e85d8f;
+}
+
+
+.ending > p:not(.end-title) {
+    color: #866a76;
+
+    margin-top: 20px;
+}
+
+
+button {
+    margin-top: 30px;
+
+    padding:
+        14px 25px;
+
+    border: none;
+
+    border-radius: 50px;
+
+    background: #e85d8f;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 25px
+        rgba(
+            232,
+            93,
+            143,
+            .3
+        );
+
+    transition: .3s;
+}
+
+
+button:hover {
+    background: #b73568;
+
+    transform:
+        translateY(-3px);
+}
+
+
+/* ================= FOOTER ================= */
+
+footer {
+    text-align: center;
+
+    padding: 25px;
+
+    color: #866a76;
+
+    font-size: 13px;
+}
+
+
+/* ================= FLOATING HEARTS ================= */
+
+.floating-hearts {
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    overflow: hidden;
+
+    z-index: 1;
+}
+
+
+.floating-hearts span {
+    position: absolute;
+
+    bottom: -50px;
+
+    color:
+        rgba(
+            232,
+            93,
+            143,
+            .3
+        );
+
+    animation:
+        heartRise
+        10s linear infinite;
+}
+
+
+.floating-hearts span:nth-child(1) {
+    left: 10%;
+
+    animation-duration: 9s;
+}
+
+
+.floating-hearts span:nth-child(2) {
+    left: 25%;
+
+    animation-duration: 12s;
+
+    animation-delay: 2s;
+}
+
+
+.floating-hearts span:nth-child(3) {
+    left: 40%;
+
+    animation-duration: 10s;
+}
+
+
+.floating-hearts span:nth-child(4) {
+    left: 55%;
+
+    animation-duration: 14s;
+
+    animation-delay: 3s;
+}
+
+
+.floating-hearts span:nth-child(5) {
+    left: 70%;
+
+    animation-duration: 11s;
+}
+
+
+.floating-hearts span:nth-child(6) {
+    left: 82%;
+
+    animation-duration: 13s;
+
+    animation-delay: 2s;
+}
+
+
+.floating-hearts span:nth-child(7) {
+    left: 94%;
+
+    animation-duration: 9s;
+}
+
+
+/* ================= ANIMATIONS ================= */
+
+@keyframes floating {
+
+    0%, 100% {
+        transform:
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            translateY(-20px);
+    }
+}
+
+
+@keyframes bounce {
+
+    0%, 100% {
+        transform:
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            translateY(10px);
+    }
+}
+
+
+@keyframes pulse {
+
+    0%, 100% {
+        transform:
+            scale(1);
+    }
+
+    50% {
+        transform:
+            scale(1.1);
+    }
+}
+
+
+@keyframes heartRise {
+
+    0% {
+        transform:
+            translateY(0)
+            rotate(0);
+
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    100% {
+        transform:
+            translateY(-110vh)
+            rotate(360deg);
+
+        opacity: 0;
+    }
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 700px) {
+
+    .hero h1 {
+        font-size: 55px;
+    }
+
+
+    .balloon {
+        font-size: 30px;
+    }
+
+
+    .balloon-left {
+        left: 3%;
+
+        top: 20%;
+    }
+
+
+    .balloon-right {
+        right: 3%;
+
+        top: 30%;
+    }
+
+
+    .section {
+        padding:
+            70px 0;
+    }
+
+
+    .section-title h2 {
+        font-size: 30px;
+    }
+
+
+    .message-box {
+        padding: 25px;
+
+        font-size: 15px;
+
+        line-height: 1.8;
+    }
+
+
+    .photos {
+        grid-template-columns: 1fr;
+    }
+
+
+    .photo-card img {
+        height: auto;
+
+        max-height: 650px;
+    }
+
+
+    .ending h2 {
+        font-size: 42px;
+    }
+
+}

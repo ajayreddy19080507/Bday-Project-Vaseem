@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Vaseem ❤️ 3D Love</title>
+  <style>
+    /* Reset & base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+      background: #0b0b1a;
+      color: #f5e9ff;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+    /* 3D canvas background - fixed */
+    #three-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+    /* content layer */
+    .content {
+      position: relative;
+      z-index: 5;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 3rem;
+      backdrop-filter: blur(2px);
+    }
+    /* floating hearts (2D) */
+    .floating-hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+      overflow: hidden;
+    }
+    .floating-hearts span {
+      position: absolute;
+      font-size: 2rem;
+      color: rgba(255, 120, 180, 0.4);
+      animation: floatHeart 12s infinite ease-in-out;
+      display: inline-block;
+    }
+    .floating-hearts span:nth-child(1) { left: 5%; animation-delay: 0s; font-size: 2.4rem; }
+    .floating-hearts span:nth-child(2) { left: 15%; animation-delay: 2s; font-size: 1.8rem; }
+    .floating-hearts span:nth-child(3) { left: 25%; animation-delay: 4s; font-size: 3rem; }
+    .floating-hearts span:nth-child(4) { left: 40%; animation-delay: 1s; font-size: 2rem; }
+    .floating-hearts span:nth-child(5) { left: 55%; animation-delay: 3s; font-size: 2.6rem; }
+    .floating-hearts span:nth-child(6) { left: 70%; animation-delay: 5s; font-size: 2.2rem; }
+    .floating-hearts span:nth-child(7) { left: 82%; animation-delay: 2.5s; font-size: 1.6rem; }
+    .floating-hearts span:nth-child(8) { left: 92%; animation-delay: 4.5s; font-size: 2.8rem; }
+
+    @keyframes floatHeart {
+      0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0.2; }
+      20% { opacity: 0.7; }
+      80% { opacity: 0.7; }
+      100% { transform: translateY(-20vh) rotate(720deg) scale(1.2); opacity: 0; }
+    }
+
+    /* typography & cards */
+    .hero, .section, .ending {
+      background: rgba(10, 8, 25, 0.55);
+      backdrop-filter: blur(6px);
+      border-radius: 3rem 2rem;
+      padding: 2.5rem 2rem;
+      margin-bottom: 3rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(255, 180, 220, 0.15);
+      border: 1px solid rgba(255, 100, 150, 0.2);
+      transition: 0.3s;
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .section-title .emoji {
+      font-size: 3rem;
+      filter: drop-shadow(0 0 12px #ff3b7f);
+    }
+    .section-title p {
+      letter-spacing: 4px;
+      font-weight: 300;
+      color: #ffb0d0;
+      margin: 0.5rem 0 0.2rem;
+    }
+    .section-title h2 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, #ff9bc0, #ff6a9e);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    h1 {
+      font-size: 4.2rem;
+      font-weight: 800;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #ffb3d9, #ff4d7a);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 30px rgba(255, 80, 130, 0.4);
+      margin: 0.5rem 0;
+    }
+    .hero h2 {
+      font-size: 3rem;
+      color: #ffe0f0;
+      text-shadow: 0 0 20px #ff3b7f;
+    }
+    .small-title {
+      color: #ffb0d0;
+      letter-spacing: 3px;
+      font-weight: 300;
+    }
+    .hero-text {
+      font-size: 1.3rem;
+      margin: 1.2rem 0;
+      color: #f0d0e8;
+    }
+    .balloon {
+      font-size: 4rem;
+      display: inline-block;
+      animation: bob 3s infinite alternate ease-in-out;
+    }
+    .balloon-left { float: left; margin-right: 20px; }
+    .balloon-right { float: right; margin-left: 20px; }
+    @keyframes bob {
+      0% { transform: translateY(0px) rotate(-5deg); }
+      100% { transform: translateY(-18px) rotate(5deg); }
+    }
+    .down-arrow {
+      display: inline-block;
+      font-size: 2.8rem;
+      color: #ff8ab0;
+      animation: bounce 1.8s infinite;
+      margin-top: 0.8rem;
+      text-decoration: none;
+    }
+    @keyframes bounce {
+      0%,100%{ transform: translateY(0); }
+      50%{ transform: translateY(15px); }
+    }
+    .message-box {
+      background: rgba(25, 15, 40, 0.5);
+      border-radius: 2rem;
+      padding: 2rem 2rem;
+      border-left: 6px solid #ff4d7a;
+      box-shadow: inset 0 0 30px rgba(255, 50, 100, 0.1);
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+    .message-box p {
+      margin-bottom: 0.8rem;
+    }
+    .message-box strong {
+      color: #ffb0d0;
+      font-weight: 600;
+    }
+    .special {
+      border-left-color: #ff9f4b;
+      background: rgba(40, 20, 30, 0.5);
+    }
+    
+    /* PHOTO GALLERY - COMPLETELY CLEAN, NO BOXES, NO TEXT, NO SPACE */
+    .photos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);  /* 3 columns for 9 images */
+      gap: 0.2rem;
+      justify-content: center;
+    }
+    .photo-card {
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0;
+      box-shadow: none;
+      backdrop-filter: none;
+      border-radius: 0;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      line-height: 0;
+    }
+    .photo-card:hover {
+      transform: scale(1.04);
+      z-index: 10;
+    }
+    .photo-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 0.3rem;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      background: transparent;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      transition: box-shadow 0.3s ease;
+      border: none;
+      margin: 0;
+      padding: 0;
+    }
+    .photo-card img:hover {
+      box-shadow: 0 4px 25px rgba(255, 50, 100, 0.3);
+    }
+    .photo-card p {
+      display: none !important;
+    }
+    
+    /* Hide the MEMORIES section title completely */
+    .memories .section-title {
+      display: none !important;
+    }
+    
+    /* Remove extra space from memories section */
+    .memories {
+      padding-bottom: 0.5rem !important;
+    }
+    
+    .ending {
+      text-align: center;
+      background: rgba(18, 8, 30, 0.7);
+    }
+    .cake {
+      font-size: 4.5rem;
+      filter: drop-shadow(0 0 20px #ff5e8a);
+      margin-bottom: 0.5rem;
+    }
+    .end-title {
+      letter-spacing: 6px;
+      color: #ff9bc0;
+    }
+    .ending h2 {
+      font-size: 3rem;
+      margin: 0.8rem 0;
+    }
+    .ending h2 span {
+      background: linear-gradient(135deg, #ffb0d0, #ff3b7f);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    #celebrateButton {
+      background: linear-gradient(135deg, #ff4d7a, #d42f5a);
+      border: none;
+      color: white;
+      font-weight: 700;
+      font-size: 1.5rem;
+      padding: 1rem 3rem;
+      border-radius: 60px;
+      cursor: pointer;
+      box-shadow: 0 0 30px rgba(255, 50, 100, 0.6);
+      transition: 0.3s;
+      margin: 1.2rem 0 0.5rem;
+      
+      letter-spacing: 2px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      position: relative;
+      z-index: 10;
+    }
+    #celebrateButton:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 50px #ff3b7f;
+      background: linear-gradient(135deg, #ff6a9e, #e63b6b);
+    }
+    footer {
+      text-align: center;
+      padding: 2rem 0 1rem;
+      opacity: 0.7;
+      font-weight: 300;
+      letter-spacing: 2px;
+      color: #cfa0c0;
+      border-top: 1px solid rgba(255, 150, 200, 0.15);
+      margin-top: 2rem;
+    }
+    /* responsive */
+    @media (max-width: 600px) {
+      h1 { font-size: 2.8rem; }
+      .hero h2 { font-size: 2.2rem; }
+      .section-title h2 { font-size: 1.8rem; }
+      .balloon { font-size: 2.5rem; }
+      .content { padding: 1rem; }
+      .hero, .section, .ending { padding: 1.8rem 1rem; }
+      .photos { grid-template-columns: repeat(3, 1fr); gap: 0.15rem; }
+    }
+    @media (min-width: 601px) and (max-width: 900px) {
+      .photos { grid-template-columns: repeat(3, 1fr); gap: 0.2rem; }
+    }
+
+    /* CELEBRATION BURST - full screen confetti & emojis */
+    .celebration-burst {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1000;
+      overflow: hidden;
+    }
+    .confetti-piece {
+      position: absolute;
+      border-radius: 4px;
+      animation: confettiFall linear forwards;
+      opacity: 0.95;
+    }
+    @keyframes confettiFall {
+      0% {
+        transform: translateY(-20px) rotate(0deg) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(720deg) scale(0.2);
+        opacity: 0;
+      }
+    }
+    .burst-emoji {
+      position: absolute;
+      font-size: 2.8rem;
+      animation: emojiBurst 2s ease-out forwards;
+      pointer-events: none;
+    }
+    @keyframes emojiBurst {
+      0% {
+        transform: translate(0, 0) scale(0.2) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--tx), var(--ty)) scale(1.6) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    .sparkle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 12px #ffb0d0;
+      animation: sparkleFade 1.2s ease-out forwards;
+    }
+    @keyframes sparkleFade {
+      0% { transform: scale(0); opacity: 1; }
+      100% { transform: scale(2); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 3D Canvas background -->
+  <div id="three-canvas"></div>
+
+  <!-- Floating hearts (2D) -->
+  <div class="floating-hearts">
+    <span>♡</span><span>♥</span><span>♡</span><span>♥</span>
+    <span>♡</span><span>♥</span><span>♡</span><span>♥</span>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="content">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="balloon balloon-left">🎈</div>
+      <div class="balloon balloon-right">🎈</div>
+      <p class="small-title">A LITTLE BIRTHDAY SURPRISE</p>
+      <h1>HAPPY<br>BIRTHDAY</h1>
+      <h2>VASEEM ❤️</h2>
+      <p class="hero-text">Today is all about celebrating you ✨</p>
+      <a href="#wish" class="down-arrow">↓</a>
+    </section>
+
+    <!-- WISH -->
+    <section class="section" id="wish">
+      <div class="section-title">
+        <div class="emoji">💖</div>
+        <p>A SWEET WISH</p>
+        <h2>For my favourite person</h2>
+      </div>
+      <div class="message-box">
+        <p><strong>To my favourite person..💕</strong></p>
+        <p>No matter how much time passes or how life changes, you will always be a special one in my life. 😘</p>
+        <p>You're my soulmate 🤌🏻🩷♾️<br><strong>To my dearest one ❣️</strong></p>
+        <p>Happy Birthday to my very favourite person... 🌎</p>
+        <p>Another year of you is another year of happiness. 😚</p>
+        <p>You are my absolute happiness, now and for the years to come. 🗓️</p>
+        <p>More years for you to teach me the ways of life and more years of inspiration for the strong woman I want to be.</p>
+        <p>You inspire me to be a kind-hearted ❣️, loving 💗, understanding 🫂 person... because that's who you are. ❤️‍🩹</p>
+      </div>
+    </section>
+
+    <!-- ================= MEMORIES - 9 IMAGES ================= -->
+    <section class="section memories">
+      <div class="photos">
+        <!-- PHOTO 1 -->
+        <div class="photo-card">
+          <img src="images/photo1.jpeg" alt="">
+        </div>
+
+        <!-- PHOTO 2 -->
+        <div class="photo-card">
+          <img src="images/photo2.jpeg" alt="">
+        </div>
+
+        <!-- PHOTO 3 -->
+        <div class="photo-card">
+          <img src="images/photo3.jpeg" alt="">
+        </div>
+
+        <!-- PHOTO 4 -->
+        <div class="photo-card">
+          <img src="images/photo4.jpeg" alt="">
+        </div>
+
+        <!-- PHOTO 5 -->
+        <div class="photo-card">
+          <img src="images/photo5.jpeg" alt="">
+        </div>
+
+        <!-- PHOTO 6 -->
+        <div class="photo-card">
+          <img src="images/photo6.jpeg" alt="">
+        </div>
+
+        <!-- PHOTO 7 -->
+        <div class="photo-card">
+          <img src="images/photo7.jpeg" alt="">
+        </div>
+
+        <!-- PHOTO 8 -->
+        <div class="photo-card">
+          <img src="images/photo8.jpeg" alt="">
+        </div>
+
+        <!-- PHOTO 9 (NEW) -->
+        <div class="photo-card">
+          <img src="images/photo9.jpeg" alt="">
+        </div>
+      </div>
+    </section>
+
+    <!-- SPECIAL MESSAGE -->
+    <section class="section">
+      <div class="section-title">
+        <div class="emoji">🌸</div>
+        <p>SPECIAL MESSAGE</p>
+        <h2>A few words from the heart</h2>
+      </div>
+      <div class="message-box special">
+        <p><strong>Wish you a very Happy Birthday Vaseem.... 🫂🥰</strong></p>
+        <p>I am very lucky....to have u man ❤️‍🩹</p>
+        <p>No matter it is.....U will be a special person within my special person's....🐖</p>
+        <p>Tqq for standing besides me...yaar.... 🤕<br>When I am low....u will be my side....</p>
+        <p>Tqq for all uncustomize and unnoticed.... helps..... 🫂..... 🫂</p>
+        <p>Keep smiling always.... 😀</p>
+        <p>Don't forget me when u are low.... 🥺</p>
+        <p>Don't hesitate to ask anything....☺️</p>
+        <p>.....🎀.....<br>No more words Vaseem..... 🫂🥰</p>
+        <p>Thanks a lot....yaar.... 🤗</p>
+        <p><strong>Once again wish you a very Happy Birthday ra 🫂❤️</strong></p>
+      </div>
+    </section>
+
+    <!-- FINAL -->
+    <section class="ending">
+      <div class="cake">🎂</div>
+      <p class="end-title">THE END</p>
+      <h2>HAPPY BIRTHDAY<br><span>VASEEM ❤️</span></h2>
+      <p>Have a beautiful day! 🌸</p>
+      <button id="celebrateButton">Celebrate 🎉</button>
+    </section>
+
+    <footer>Made with lots of wishes for Vaseem 💕</footer>
+  </div>
+
+  <!-- Three.js from CDN -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.126.0/build/three.module.js"
+      }
+    }
+  </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+
+    // --- setup ---
+    const container = document.getElementById('three-canvas');
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x0b0b1a);
+
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(0, 2, 12);
+    camera.lookAt(0, 0, 0);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.shadowMap.enabled = false;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    container.appendChild(renderer.domElement);
+
+    // --- lights ---
+    const ambient = new THREE.AmbientLight(0x40406b);
+    scene.add(ambient);
+
+    const light1 = new THREE.PointLight(0xff4d7a, 1.2, 20);
+    light1.position.set(3, 4, 5);
+    scene.add(light1);
+
+    const light2 = new THREE.PointLight(0x4d8aff, 1.0, 20);
+    light2.position.set(-4, 2, 6);
+    scene.add(light2);
+
+    const backLight = new THREE.DirectionalLight(0xccaaff, 0.8);
+    backLight.position.set(-1, 0, -5);
+    scene.add(backLight);
+
+    // --- heart shape (3D) ---
+    function createHeartShape() {
+      const shape = new THREE.Shape();
+      shape.moveTo(0, 0.3);
+      shape.bezierCurveTo(0.3, 0.6, 0.7, 0.4, 0.7, 0);
+      shape.bezierCurveTo(0.7, -0.4, 0.3, -0.6, 0, -0.2);
+      shape.bezierCurveTo(-0.3, -0.6, -0.7, -0.4, -0.7, 0);
+      shape.bezierCurveTo(-0.7, 0.4, -0.3, 0.6, 0, 0.3);
+      return shape;
+    }
+
+    const heartShape = createHeartShape();
+    const extrudeSettings = { depth: 0.25, bevelEnabled: true, bevelThickness: 0.1, bevelSize: 0.05, bevelSegments: 12 };
+    const heartGeom = new THREE.ExtrudeGeometry(heartShape, extrudeSettings);
+    heartGeom.center();
+
+    const heartMat = new THREE.MeshStandardMaterial({
+      color: 0xff3b7f,
+      emissive: 0xaa1a4a,
+      roughness: 0.2,
+      metalness: 0.1,
+      emissiveIntensity: 0.5,
+    });
+    const heart = new THREE.Mesh(heartGeom, heartMat);
+    heart.scale.set(0.6, 0.6, 0.6);
+    heart.position.set(0, 0.2, 0);
+    scene.add(heart);
+
+    // smaller hearts around
+    const smallHearts = [];
+    const colors = [0xff6a9e, 0xff9bc0, 0xff4d7a, 0xff2d6a];
+    for (let i = 0; i < 16; i++) {
+      const smallMat = new THREE.MeshStandardMaterial({
+        color: colors[Math.floor(Math.random() * colors.length)],
+        emissive: 0x551a3a,
+        roughness: 0.3,
+        metalness: 0.1,
+        emissiveIntensity: 0.3,
+      });
+      const small = new THREE.Mesh(heartGeom, smallMat);
+      const angle = (i / 16) * Math.PI * 2;
+      const radius = 2.2 + Math.random() * 1.2;
+      small.position.set(Math.cos(angle) * radius, Math.sin(angle) * radius * 0.7 + 0.3, Math.sin(angle * 0.8) * 0.8);
+      small.scale.set(0.15 + Math.random() * 0.15, 0.15 + Math.random() * 0.15, 0.15 + Math.random() * 0.15);
+      small.rotation.z = angle;
+      small.rotation.x = 0.3;
+      small.rotation.y = angle * 0.5;
+      scene.add(small);
+      smallHearts.push({ mesh: small, angle: angle, radius: radius, speed: 0.2 + Math.random() * 0.2, offset: Math.random() * 10 });
+    }
+
+    // --- floating 3D shapes ---
+    const shapesGroup = new THREE.Group();
+    scene.add(shapesGroup);
+
+    const shapeTypes = [
+      { type: 'sphere', color: 0xff8ab0, size: 0.3 },
+      { type: 'torus', color: 0xff4d7a, size: 0.25 },
+      { type: 'cone', color: 0xff9bc0, size: 0.28 },
+      { type: 'dodecahedron', color: 0xff6a9e, size: 0.22 },
+    ];
+
+    const floatingItems = [];
+    for (let i = 0; i < 40; i++) {
+      const pick = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
+      let geom;
+      switch (pick.type) {
+        case 'sphere': geom = new THREE.SphereGeometry(pick.size, 16, 16); break;
+        case 'torus': geom = new THREE.TorusGeometry(pick.size, pick.size*0.4, 12, 18); break;
+        case 'cone': geom = new THREE.ConeGeometry(pick.size, pick.size*1.6, 8); break;
+        case 'dodecahedron': geom = new THREE.DodecahedronGeometry(pick.size); break;
+        default: geom = new THREE.SphereGeometry(0.2, 8, 8);
+      }
+      const mat = new THREE.MeshStandardMaterial({
+        color: pick.color,
+        emissive: 0x331a2a,
+        roughness: 0.3,
+        metalness: 0.2,
+        emissiveIntensity: 0.2,
+        transparent: true,
+        opacity: 0.7 + Math.random() * 0.3,
+      });
+      const mesh = new THREE.Mesh(geom, mat);
+      const radius = 2.5 + Math.random() * 4.5;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.random() * Math.PI - Math.PI/2;
+      mesh.position.set(
+        Math.cos(theta) * radius * 0.8,
+        Math.sin(phi) * 1.8 + 0.5,
+        Math.sin(theta) * radius * 0.6
+      );
+      mesh.rotation.set(Math.random()*6, Math.random()*6, Math.random()*6);
+      shapesGroup.add(mesh);
+      floatingItems.push({
+        mesh,
+        basePos: mesh.position.clone(),
+        speed: 0.2 + Math.random() * 0.3,
+        phase: Math.random() * 10,
+        rotSpeed: 0.01 + Math.random() * 0.02,
+      });
+    }
+
+    // --- floating bigger shapes ---
+    for (let i = 0; i < 12; i++) {
+      const geom = new THREE.TorusKnotGeometry(0.2 + Math.random()*0.2, 0.08, 40, 8);
+      const mat = new THREE.MeshStandardMaterial({
+        color: 0xff5e8a,
+        emissive: 0x551a3a,
+        roughness: 0.2,
+        metalness: 0.3,
+        emissiveIntensity: 0.4,
+        transparent: true,
+        opacity: 0.6,
+      });
+      const knot = new THREE.Mesh(geom, mat);
+      const r = 2.8 + Math.random() * 3.2;
+      const a = Math.random() * Math.PI * 2;
+      knot.position.set(Math.cos(a)*r*0.9, Math.sin(a)*0.8 + 0.2, Math.sin(a)*r*0.7);
+      knot.scale.set(0.7,0.7,0.7);
+      shapesGroup.add(knot);
+      floatingItems.push({
+        mesh: knot,
+        basePos: knot.position.clone(),
+        speed: 0.15 + Math.random()*0.25,
+        phase: Math.random()*10,
+        rotSpeed: 0.008 + Math.random()*0.015,
+      });
+    }
+
+    // --- stars background ---
+    const starsGeom = new THREE.BufferGeometry();
+    const starsCount = 800;
+    const posArray = new Float32Array(starsCount * 3);
+    for (let i = 0; i < starsCount * 3; i += 3) {
+      posArray[i] = (Math.random() - 0.5) * 60;
+      posArray[i+1] = (Math.random() - 0.5) * 30;
+      posArray[i+2] = (Math.random() - 0.5) * 30 - 10;
+    }
+    starsGeom.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+    const starsMat = new THREE.PointsMaterial({ color: 0xffb0d0, size: 0.08, transparent: true, opacity: 0.5 });
+    const stars = new THREE.Points(starsGeom, starsMat);
+    scene.add(stars);
+
+    // mouse interaction
+    let mouseX = 0, mouseY = 0;
+    document.addEventListener('mousemove', (e) => {
+      mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+      mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+    });
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+
+      heart.rotation.x += 0.005;
+      heart.rotation.y += 0.01;
+      heart.rotation.z += 0.003;
+
+      smallHearts.forEach((item) => {
+        const newAngle = item.angle + 0.008 * item.speed;
+        item.mesh.position.x = Math.cos(newAngle) * item.radius;
+        item.mesh.position.z = Math.sin(newAngle * 0.7) * 1.2;
+        item.mesh.position.y = Math.sin(newAngle * 0.6) * 0.8 + 0.4;
+        item.mesh.rotation.x += 0.02;
+        item.mesh.rotation.y += 0.03;
+        item.angle = newAngle;
+      });
+
+      const time = Date.now() * 0.001;
+      floatingItems.forEach((item) => {
+        item.mesh.position.x = item.basePos.x + Math.sin(time * item.speed * 0.7 + item.phase) * 0.3;
+        item.mesh.position.y = item.basePos.y + Math.sin(time * item.speed * 0.5 + item.phase * 0.6) * 0.3 + Math.sin(time * 0.2 + item.phase) * 0.15;
+        item.mesh.position.z = item.basePos.z + Math.cos(time * item.speed * 0.6 + item.phase) * 0.3;
+        item.mesh.rotation.x += item.rotSpeed;
+        item.mesh.rotation.y += item.rotSpeed * 0.7;
+      });
+
+      camera.position.x += (mouseX * 0.5 - camera.position.x) * 0.005;
+      camera.position.y += (mouseY * 0.3 + 1.5 - camera.position.y) * 0.005;
+      camera.lookAt(0, 0.3, 0);
+
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // --- FULL BURST CELEBRATION ---
+    function createFullBurst() {
+      const burstContainer = document.createElement('div');
+      burstContainer.className = 'celebration-burst';
+      document.body.appendChild(burstContainer);
+
+      const confettiColors = ['#ff4d7a', '#ff9bc0', '#ffb0d0', '#ff6a9e', '#ff2d6a', '#ffaa88', '#ffd0d0', '#ff80b0', '#ff5e8a', '#ff3b7f'];
+      const emojis = ['🎉', '✨', '❤️', '💖', '🎊', '🥳', '🎂', '💕', '🌸', '🎈', '🌟', '💗', '💝', '🌺', '🎁'];
+
+      for (let i = 0; i < 180; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'confetti-piece';
+        const size = 6 + Math.random() * 16;
+        piece.style.width = size + 'px';
+        piece.style.height = (size * 1.3) + 'px';
+        piece.style.background = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+        piece.style.left = Math.random() * 100 + '%';
+        piece.style.top = '-10px';
+        piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+        piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+        piece.style.animationDuration = (1.8 + Math.random() * 2.8) + 's';
+        piece.style.animationDelay = (Math.random() * 1.5) + 's';
+        piece.style.boxShadow = `0 0 6px ${confettiColors[Math.floor(Math.random() * confettiColors.length)]}`;
+        burstContainer.appendChild(piece);
+      }
+
+      for (let i = 0; i < 50; i++) {
+        const emoji = document.createElement('div');
+        emoji.className = 'burst-emoji';
+        emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        const x = 5 + Math.random() * 90;
+        const y = 5 + Math.random() * 90;
+        emoji.style.left = x + '%';
+        emoji.style.top = y + '%';
+        const tx = (Math.random() - 0.5) * 500;
+        const ty = (Math.random() - 0.5) * 400 - 150;
+        emoji.style.setProperty('--tx', tx + 'px');
+        emoji.style.setProperty('--ty', ty + 'px');
+        emoji.style.fontSize = (2 + Math.random() * 4) + 'rem';
+        emoji.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+        emoji.style.animationDelay = (Math.random() * 1.2) + 's';
+        burstContainer.appendChild(emoji);
+      }
+
+      for (let i = 0; i < 60; i++) {
+        const spark = document.createElement('div');
+        spark.className = 'sparkle';
+        spark.style.left = Math.random() * 100 + '%';
+        spark.style.top = Math.random() * 100 + '%';
+        spark.style.width = (3 + Math.random() * 8) + 'px';
+        spark.style.height = spark.style.width;
+        spark.style.background = `hsl(${320 + Math.random() * 40}, 100%, 70%)`;
+        spark.style.boxShadow = `0 0 20px ${['#ff4d7a','#ff9bc0','#ffb0d0','#ff6a9e'][Math.floor(Math.random()*4)]}`;
+        spark.style.animationDuration = (0.8 + Math.random() * 1.2) + 's';
+        spark.style.animationDelay = (Math.random() * 1.5) + 's';
+        burstContainer.appendChild(spark);
+      }
+
+      setTimeout(() => {
+        burstContainer.remove();
+      }, 5500);
+    }
+
+    // --- ATTACH CELEBRATE BUTTON ---
+    document.getElementById('celebrateButton').addEventListener('click', function(e) {
+      e.stopPropagation();
+      createFullBurst();
+      heart.material.color.setHex(0xffaa88);
+      setTimeout(() => { heart.material.color.setHex(0xff3b7f); }, 700);
+      smallHearts.forEach((item) => {
+        item.mesh.material.color.setHex(0xffaa88);
+        setTimeout(() => { item.mesh.material.color.setHex(0xff3b7f); }, 500);
+      });
+    });
+
+    console.log('💖 3D Love background active - Full burst on Celebrate!');
+  </script>
+</body>
+</html>
